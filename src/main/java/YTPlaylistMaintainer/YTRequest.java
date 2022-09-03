@@ -20,7 +20,7 @@ public class YTRequest {
                 "&maxResults=" + maxResults + "&pageToken=" + nextPageToken +"&playlistId=" +
                 playlistId + "&key=" + apiKey;
 
-        // Form a http request.
+        // Form a http request
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
                 .header("accept", "application/json")

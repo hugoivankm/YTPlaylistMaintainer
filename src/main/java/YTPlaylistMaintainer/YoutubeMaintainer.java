@@ -3,6 +3,7 @@ package YTPlaylistMaintainer;
 import Models.Playlist.PlayListItem;
 import Models.Playlist.YTPlaylistResponse;
 import Services.JSON.JSONService;
+import Services.Persistence.TextFileHandler;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.nio.file.Path;
@@ -23,13 +24,13 @@ public class YoutubeMaintainer {
         Path root = Paths.get(".").normalize().toAbsolutePath();
         Path dotenvPath = Paths.get(root.toString(), ".env");
 
-        Dotenv dotenv =  Dotenv.configure()
-                               .directory(dotenvPath.toString())
-                               .load();
+        Dotenv dotenv = Dotenv.configure()
+                .directory(dotenvPath.toString())
+                .load();
 
         String PLAYLIST_ID = dotenv.get("PLAYLIST_ID");
-        String API_KEY = dotenv.get("API_KEY");;
-
+        String API_KEY = dotenv.get("API_KEY");
+        ;
 
         try {
             do {
@@ -53,6 +54,17 @@ public class YoutubeMaintainer {
             for (var item : itemList) {
                 System.out.println(item.snippet.position + " " + item.snippet.title);
             }
+
+            String path = Paths.get("./test.txt").toAbsolutePath().toString();
+            TextFileHandler textFile = new TextFileHandler();
+            List<String> data = new ArrayList<>();
+
+            for (var item : itemList) {
+                data.add(item.snippet.position + " " + item.snippet.title);
+            }
+
+            textFile.save(data, path);
+
         } catch (Exception e) {
             System.out.println("EXCEPTION");
             System.out.println(e.getStackTrace());
