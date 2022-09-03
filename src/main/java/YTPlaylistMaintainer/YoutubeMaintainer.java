@@ -38,13 +38,12 @@ public class YoutubeMaintainer {
                     return;
                 }
                 // Make a request to YT and store the playlist
-                jsonValue = YTRequest.GetRequest(PLAYLIST_ID, API_KEY, nextPageToken).join();
+                jsonValue = YTRequest.getPlaylist(PLAYLIST_ID, API_KEY, nextPageToken).join();
 
                 // Parse that JSON that we got to objects and extract next page token
                 playListObj = JSONService.JSON2Object(jsonValue);
 
                 itemList.addAll(playListObj.items);
-
 
                 nextPageToken = playListObj.nextPageToken;
                 hasNextPageToken = isStringFalsy(nextPageToken);

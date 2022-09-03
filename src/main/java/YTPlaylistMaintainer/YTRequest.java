@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class YTRequest {
 
-    public static CompletableFuture<String> GetRequest(String playlistId, String apiKey, String nextPageToken) throws Exception {
+    public static CompletableFuture<String> getPlaylist(String playlistId, String apiKey, String nextPageToken) throws Exception {
 
         // Form URL for HttpRequest
         final int maxResults = 50;
