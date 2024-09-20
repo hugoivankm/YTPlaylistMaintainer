@@ -9,6 +9,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -17,9 +18,9 @@ public class YoutubeMaintainer {
     public static void main(String[] args) {
         String nextPageToken = null;
         List<PlayListItem> itemList = new ArrayList<>();
-        YTPlaylistResponse playListObj = null;
-        String jsonValue = "";
-        boolean hasNextPageToken = false;
+        YTPlaylistResponse playListObj;
+        String jsonValue;
+        boolean hasNextPageToken;
 
         Path root = Paths.get(".").normalize().toAbsolutePath();
         Path dotenvPath = Paths.get(root.toString(), ".env");
@@ -30,7 +31,6 @@ public class YoutubeMaintainer {
 
         String PLAYLIST_ID = dotenv.get("PLAYLIST_ID");
         String API_KEY = dotenv.get("API_KEY");
-        ;
 
         try {
             do {
@@ -67,18 +67,15 @@ public class YoutubeMaintainer {
 
         } catch (Exception e) {
             System.out.println("EXCEPTION");
-            System.out.println(e.getStackTrace());
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 
     private static boolean isStringFalsy(String stringParameter) {
-        if (stringParameter == null || stringParameter == "") {
+        if (stringParameter == null || stringParameter.isEmpty()) {
             return false;
         }
         stringParameter = stringParameter.trim();
-        if (stringParameter.equals("null") || stringParameter.equals("")) {
-            return false;
-        }
-        return true;
+        return !stringParameter.equals("null") && !stringParameter.isEmpty();
     }
 }
